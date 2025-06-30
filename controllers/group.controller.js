@@ -132,6 +132,9 @@ const getGroupRequests = async (req, res, next) => {
         }
 
         const allGroupRequests = await GroupRequest.find({ receiverId: userId })
+            .populate('groupId', 'name')
+            .populate('senderId', 'fullName');
+
 
         if (!allGroupRequests) {
             return next(new AppError("No group requests found for this user", 404));
@@ -199,12 +202,13 @@ const getUserGroupById = async (req, res, next) => {
         }
 
         const allGroups = await Group.find({ members: userId })
-            .populate('createdBy', 'name')
-            .select('name createdBy members');
+            .populate('createdBy', 'fullName email phoneNumber')
+              .populate('members', 'fullName email phoneNumber') // ✅ this gives you fullName of each member
+            .select('fullName createdBy members');
 
-        if(!allGroups){
+        if (!allGroups) {
             return next(new AppError("No groups found for this user", 404));
-        }    
+        }
 
         res.status(200).json({
             success: true,
@@ -220,5 +224,5 @@ const getUserGroupById = async (req, res, next) => {
 }
 
 
-export {addGroup, sendGroupRequest, getGroupRequests, respondToGroupRequest, getUserGroupById}
+export { addGroup, sendGroupRequest, getGroupRequests, respondToGroupRequest, getUserGroupById }
 

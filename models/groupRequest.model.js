@@ -11,12 +11,12 @@ const groupRequestSchema = new Schema(
         },
         senderId: {
             type: Schema.Types.ObjectId,
-            ref: 'User',
+            ref: 'Safe-Gurad-User',
             required: true
         },
         receiverId: {
             type: Schema.Types.ObjectId,
-            ref: 'User',
+            ref: 'Safe-Gurad-User',
             required: true
         },
         status: {

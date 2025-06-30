@@ -10,12 +10,12 @@ const GroupSchema = new Schema(
         },
         createdBy: {
             type: Schema.Types.ObjectId,
-            ref: 'User',
+            ref: 'Safe-Gurad-User',
         },
         members: [
             {
                 type: Schema.Types.ObjectId,
-                ref: 'User',
+                ref: 'Safe-Gurad-User',
             },
         ],
 
