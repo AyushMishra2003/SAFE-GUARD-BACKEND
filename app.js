@@ -4,6 +4,11 @@ import {config} from 'dotenv'
 import morgan from 'morgan'
 
 import cors from 'cors'
+import userRouter from './route/user.route.js'
+import errorMiddleware from './middlewares/error.middleware.js'
+import groupRouter from './route/group.routes.js'
+
+
 
 
 config()
@@ -22,6 +27,8 @@ app.use(cors({
 app.use(morgan('dev'))
 
 
+app.use("/api/v1/user",userRouter)
+app.use("/api/v1/group",groupRouter)
 
 
 // app.use(errorMiddleware)
@@ -38,6 +45,9 @@ app.all('*',(req,res)=>{
     res.status(404).send('OOPS!! 404 NOT FOUND')
 })
 
+
+
+app.use(errorMiddleware);
 
 
 
