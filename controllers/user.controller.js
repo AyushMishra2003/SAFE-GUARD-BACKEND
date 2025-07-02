@@ -35,6 +35,33 @@ export const addUser = async (req, res, next) => {
     }
 };
 
+
+export const loginUser=async(req,res,next)=>{
+     try{
+
+        const {email,password}=req.body
+
+        const userExists=await User.find({
+            email:email,
+            password:password
+        })
+
+
+        if(!userExists){
+             return next(new AppError("Invalid email or password", 401));
+        }
+
+        res.status(200).json({
+            success: true,
+            message: "User logged in successfully",
+            data: userExists,
+        });
+
+     }catch(error){
+         return next(new AppError(error.message, 500));
+     }
+}
+
 // READ - Get all users
 export const getAllUsers = async (req, res, next) => {
     try {
